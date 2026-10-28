@@ -1,0 +1,9 @@
+# From-scratch custom board definition (L5 task 2).
+# Board files authored manually; reuses the existing qemu_virt_riscv32 SoC.
+
+board:
+  name: qemu_coursedev
+  full_name: Course Dev Board (QEMU RISC-V)
+  vendor: qemu
+  socs:
+    - name: qemu_virt_riscv32

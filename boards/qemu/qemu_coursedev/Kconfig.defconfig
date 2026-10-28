@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: Apache-2.0
+# Board-level default configuration for qemu_coursedev.
+
+if BOARD_QEMU_COURSEDEV
+
+config BUILD_OUTPUT_BIN
+	default n
+
+config HAS_COVERAGE_SUPPORT
+	default y
+
+config QEMU_ICOUNT_SHIFT
+	default 6 if QEMU_ICOUNT
+
+endif # BOARD_QEMU_COURSEDEV

@@ -1,0 +1,18 @@
+identifier: qemu_coursedev
+name: Course Dev Board (QEMU RISC-V)
+type: qemu
+simulation:
+  - name: qemu
+arch: riscv
+toolchain:
+  - zephyr
+supported:
+  - uart
+  - gpio
+ram: 262144
+flash: 32768
+testing:
+  default: true
+  ignore_tags:
+    - net
+    - bluetooth

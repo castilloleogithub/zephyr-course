@@ -1,0 +1,20 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* From-scratch devicetree for qemu_coursedev. Reuses the qemu_virt
+ * RISC-V SoC devicetree include and selects the UART as console.
+ */
+
+/dts-v1/;
+
+#include <qemu/virt-riscv32.dtsi>
+
+/ {
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,sram = &ram0;
+	};
+};
+
+&uart0 {
+	status = "okay";
+};
