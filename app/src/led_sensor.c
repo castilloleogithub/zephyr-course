@@ -4,6 +4,9 @@
  * Implements the sensor driver API:
  *   - sensor_sample_fetch() : sets the LED state to ON
  *   - sensor_channel_get()  : sets the LED state to OFF and returns a value
+ *
+ * L6-task2: custom extension API (led_sensor_set_brightness()) that changes
+ * the "brightness" parameter stored in the dynamic data structure.
  */
 
 #include <zephyr/kernel.h>
@@ -19,9 +22,11 @@ LOG_MODULE_REGISTER(led_sensor, CONFIG_LOG_DEFAULT_LEVEL);
 /* The LED is taken from the devicetree alias "app-led" (see app.overlay). */
 #define LED_SENSOR_NODE DT_ALIAS(app_led)
 
+/* Dynamic data structure of the driver instance (device->data). */
 struct led_sensor_data {
 	bool led_on;
 	uint32_t sample_count;
+	uint8_t brightness; /* 0..100, changed by the extension API */
 };
 
 static int led_sensor_init(const struct device *dev)
@@ -44,6 +49,7 @@ static int led_sensor_init(const struct device *dev)
 
 	data->led_on = true;
 	data->sample_count = 0U;
+	data->brightness = 100U;
 
 	LOG_DBG("LED sensor driver initialized");
 	return 0;
@@ -106,4 +112,44 @@ DEVICE_DEFINE(led_sensor, "LED Sensor", led_sensor_init, NULL, &led_sensor_data,
 const struct device *led_sensor_get_device(void)
 {
 	return DEVICE_GET(led_sensor);
+}
+
+/*
+ * L6-task2: custom extension API.
+ *
+ * Not part of struct sensor_driver_api: it is a project-specific function
+ * that changes the "brightness" parameter in the driver's dynamic data
+ * structure (struct led_sensor_data, referenced by device->data).
+ */
+int led_sensor_set_brightness(const struct device *dev, uint8_t brightness)
+{
+	struct led_sensor_data *data;
+
+	if (dev == NULL) {
+		return -ENODEV;
+	}
+
+	if (brightness > 100U) {
+		return -EINVAL;
+	}
+
+	data = dev->data;
+	data->brightness = brightness;
+
+	LOG_DBG("brightness set to %u", data->brightness);
+	return 0;
+}
+
+int led_sensor_get_brightness(const struct device *dev, uint8_t *brightness)
+{
+	struct led_sensor_data *data;
+
+	if (dev == NULL || brightness == NULL) {
+		return -ENODEV;
+	}
+
+	data = dev->data;
+	*brightness = data->brightness;
+
+	return 0;
 }

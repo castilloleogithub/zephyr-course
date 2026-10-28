@@ -31,6 +31,21 @@ int main(void)
 	printk("Hello World! %s\n", CONFIG_BOARD);
 	printk("LED sensor driver: %s\n", sensor->name);
 
+	/* L6-task2: call the custom extension API from main.
+	 * It changes the "brightness" parameter in the driver's
+	 * dynamic data structure (struct led_sensor_data).
+	 */
+	uint8_t brightness;
+
+	ret = led_sensor_set_brightness(sensor, 50);
+	if (ret != 0) {
+		printk("led_sensor_set_brightness failed: %d\n", ret);
+		return ret;
+	}
+
+	led_sensor_get_brightness(sensor, &brightness);
+	printk("LED brightness after extension API call: %u\n", brightness);
+
 	while (1) {
 		/* Fetch a sample -> LED ON */
 		ret = sensor_sample_fetch(sensor);
