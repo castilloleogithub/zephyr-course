@@ -1,0 +1,16 @@
+/*
+ * Application devicetree overlay.
+ *
+ * Adds an "app-led" alias pointing at the same LED node that the board
+ * exposes as "led0". On this board led0 aliases the node label
+ * "blue_led_0", so app-led must reference that label directly (devicetree
+ * aliases are properties of /aliases and cannot be chained with &led0).
+ *
+ * The application code uses DT_ALIAS(app_led), so porting to another board
+ * only requires updating this mapping to that board's LED node label.
+ */
+/ {
+	aliases {
+		app-led = &blue_led_0;
+	};
+};

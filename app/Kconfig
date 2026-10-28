@@ -53,3 +53,11 @@ endmenu # Expert settings
 endif # LED_ADVANCED_SETTINGS
 
 endif # LED_SUBSYSTEM
+
+config APP_HEARTBEAT_PERIOD_MS
+	int "Heartbeat LED blink period (ms)"
+	default 500
+	range 100 2000
+	help
+	Period of the application heartbeat LED, in milliseconds. The LED
+	toggles once per period, so a 500 ms period gives a 1 Hz blink.
