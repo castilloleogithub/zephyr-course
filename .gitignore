@@ -8,3 +8,7 @@ deps
 
 # Twister backup output dirs
 twister-out.*/
+
+# Twister output: keep only the coverage report (L8-task2)
+twister-out/*
+!twister-out/coverage
