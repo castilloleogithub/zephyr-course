@@ -5,3 +5,6 @@ build*/
 # West files
 .west
 deps
+
+# Twister backup output dirs
+twister-out.*/
