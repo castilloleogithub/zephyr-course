@@ -12,11 +12,6 @@
 
 #include "led_sensor.h"
 
-/* LED alias defined in app.overlay */
-#define LED_NODE DT_ALIAS(app_led)
-
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED_NODE, gpios);
-
 int main(void)
 {
 	const struct device *sensor = led_sensor_get_device();
@@ -65,7 +60,7 @@ int main(void)
 			return ret;
 		}
 
-		printk("sample read: %lld (LED OFF)\n", val.val1);
+		printk("sample read: %d (LED OFF)\n", (int)val.val1);
 
 		k_msleep(CONFIG_APP_HEARTBEAT_PERIOD_MS / 2);
 	}
