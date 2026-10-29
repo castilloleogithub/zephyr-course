@@ -1,0 +1,9 @@
+# Board-target-specific Kconfig for qemu_coursedev.
+#
+# This file is sourced by boards/Kconfig.v2:
+#     osource "$(KCONFIG_BOARD_DIR)/Kconfig.$(BOARD)"
+# i.e. it is picked up automatically because $(BOARD) == qemu_coursedev.
+# Board-wide options shared by every target in this directory stay in ./Kconfig.
+
+config BOARD_QEMU_COURSEDEV
+	select SOC_QEMU_VIRT_RISCV32

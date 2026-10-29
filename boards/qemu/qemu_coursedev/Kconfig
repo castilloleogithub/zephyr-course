@@ -1,8 +1,13 @@
-# From-scratch board Kconfig.
-# Selects the QEMU target, the reused SoC, and the late board init hook
+# From-scratch board Kconfig (board-wide options).
+#
+# Board-target-specific selects live in Kconfig.qemu_coursedev, sourced by
+# boards/Kconfig.v2 via "$(KCONFIG_BOARD_DIR)/Kconfig.$(BOARD)".
+#
+# This file is sourced by boards/Kconfig inside the "Board Options" menu.
+#
+# BOARD_QEMU_COURSEDEV selects the QEMU target and the late board init hook
 # that prints "Board Initialized" before main().
 
 config BOARD_QEMU_COURSEDEV
 	select QEMU_TARGET
-	select SOC_QEMU_VIRT_RISCV32
 	select BOARD_LATE_INIT_HOOK
