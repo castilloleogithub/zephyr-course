@@ -25,6 +25,15 @@ config LED_BLINK_TIME_2S_SLOW
 
 endchoice
 
+# Hidden companion of the choice above: the choice only selects *which*
+# option is active, so this symbol maps that option to a value in ms.
+# No prompt => it never shows up in menuconfig, it is just computed.
+config LED_BLINK_SLEEP_TIME_MS
+	int
+	default 500 if LED_BLINK_TIME_05_FAST
+	default 1000 if LED_BLINK_TIME_1S_MED
+	default 2000 if LED_BLINK_TIME_2S_SLOW
+
 menuconfig LED_ADVANCED_SETTINGS
 	bool "Advanced LED settings"
 	default n
@@ -39,6 +48,7 @@ config LED_BRIGHTNESS
 config LED_FADE_DURATION
 	int "LED fade duration (ms)"
 	default 500
+	range 0 5000
 
 menu "Expert settings"
 
